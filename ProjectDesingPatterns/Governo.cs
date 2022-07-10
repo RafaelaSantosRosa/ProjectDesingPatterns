@@ -10,6 +10,8 @@ namespace ProjectDesingPatterns
 {
     public class Governo
     {
+        private int numeroVotosCandidato1 = 0;
+        private int numeroVotosCandidato2 = 0;
 
         private static Governo eleicao = null;
         private Governo() { }
@@ -25,28 +27,40 @@ namespace ProjectDesingPatterns
 
         public void AdicionarVoto(string candidato)
         {
-            var caminhoArquivoTxt = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\..\\ResultadoVotacao.txt";
-            
             var lines = new List<string>();
-            lines = File.ReadAllLines(caminhoArquivoTxt).ToList();
+            lines = LerArquivoVotacao();
 
             lines.Add(candidato);
+
+            var caminhoArquivoTxt = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\..\\ResultadoVotacao.txt";
             File.WriteAllLines(caminhoArquivoTxt, lines);
         }
 
-        public void ResultadoEleicao()
+        public string ResultadoEleicao()
         {
-            string[] lines = LerArquivoVotacao();
+            List<string> linhas = new List<string>();
+            linhas = LerArquivoVotacao();
 
-            lines.ToList().ForEach(s => Console.WriteLine(s.ToString()));
+            foreach (var line in linhas)
+            {
+                if (line.Equals("jose", StringComparison.OrdinalIgnoreCase))
+                    numeroVotosCandidato1 += 1;
 
-            Console.Read();
+                else if(line.Equals("maria", StringComparison.OrdinalIgnoreCase))
+                    numeroVotosCandidato2 += 2;
+            }
+
+            if(numeroVotosCandidato1 > numeroVotosCandidato2)
+                return $"José venceu, com {numeroVotosCandidato1} votos";
+
+            else
+                return $"Maria venceu, com {numeroVotosCandidato2} votos";
         }
 
-        private static string[] LerArquivoVotacao()
+        private static List<string> LerArquivoVotacao()
         {
-            var caminhoArquivoTxt = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            return File.ReadAllLines(caminhoArquivoTxt + "\\ResultadoVotacao.txt");
+            var caminhoArquivoTxt = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\..\\ResultadoVotacao.txt";
+            return File.ReadAllLines(caminhoArquivoTxt).ToList();
         }
     }
 }
