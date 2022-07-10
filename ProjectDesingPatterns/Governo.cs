@@ -23,11 +23,19 @@ namespace ProjectDesingPatterns
             }
         }
 
-        public void DoSomething()
+        public void ResultadoEleicao()
         {
-            var a = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); 
-            string[] lines = File.ReadAllLines(a + "\\ResultadoVotacao.txt");
+            string[] lines = LerArquivoVotacao();
+
+            lines.ToList().ForEach(s => Console.WriteLine(s.ToString()));
+
+            Console.Read();
         }
 
+        private static string[] LerArquivoVotacao()
+        {
+            var caminhoArquivoTxt = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            return File.ReadAllLines(caminhoArquivoTxt + "\\ResultadoVotacao.txt");
+        }
     }
 }

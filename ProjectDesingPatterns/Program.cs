@@ -11,7 +11,7 @@ namespace ProjectDesingPatterns
         static void Main(string[] args)
         {
             Governo mySingleton2 = Governo.Eleicao;
-            mySingleton2.DoSomething();
+            mySingleton2.ResultadoEleicao();
         }
     }
 
