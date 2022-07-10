@@ -23,6 +23,17 @@ namespace ProjectDesingPatterns
             }
         }
 
+        public void AdicionarVoto(string candidato)
+        {
+            var caminhoArquivoTxt = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\..\\ResultadoVotacao.txt";
+            
+            var lines = new List<string>();
+            lines = File.ReadAllLines(caminhoArquivoTxt).ToList();
+
+            lines.Add(candidato);
+            File.WriteAllLines(caminhoArquivoTxt, lines);
+        }
+
         public void ResultadoEleicao()
         {
             string[] lines = LerArquivoVotacao();
