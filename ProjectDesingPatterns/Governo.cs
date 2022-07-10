@@ -13,8 +13,6 @@ namespace ProjectDesingPatterns
 
         private static Governo eleicao = null;
         private Governo() { }
-
-        public int i = 1;
         public static Governo Eleicao
         {
             get
